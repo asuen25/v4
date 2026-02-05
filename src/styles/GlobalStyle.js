@@ -78,7 +78,7 @@ const GlobalStyle = createGlobalStyle`
     color: var(--slate);
     font-family: var(--font-sans);
     font-size: var(--fz-xl);
-    line-height: 1.3;
+    line-height: 1.6;
 
     @media (max-width: 480px) {
       font-size: var(--fz-lg);
@@ -145,15 +145,15 @@ const GlobalStyle = createGlobalStyle`
 
   section {
     margin: 0 auto;
-    padding: 100px 0;
+    padding: 90px 0;
     max-width: 1000px;
 
     @media (max-width: 768px) {
-      padding: 80px 0;
+      padding: 70px 0;
     }
 
     @media (max-width: 480px) {
-      padding: 60px 0;
+      padding: 50px 0;
     }
   }
 
@@ -171,12 +171,12 @@ const GlobalStyle = createGlobalStyle`
 
   .big-heading {
     margin: 0;
-    font-size: clamp(40px, 8vw, 80px);
+    font-size: clamp(42px, 7vw, 80px);
   }
 
   .medium-heading {
     margin: 0;
-    font-size: clamp(40px, 8vw, 60px);
+    font-size: clamp(36px, 6vw, 60px);
   }
 
   .numbered-heading {

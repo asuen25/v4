@@ -128,13 +128,13 @@ const About = () => {
 
   const skills = [
     'Verilog',
-    'System Verilog',
-    'Vivado',
+    'SystemVerilog',
     'C++',
     'Python',
     'Altium Designer',
-    'NI Multisim',
+    'Vivado',
     'MATLAB',
+    'Embedded Systems',
   ];
 
   return (
@@ -145,15 +145,15 @@ const About = () => {
         <StyledText>
           <div>
             <p>
-              Hello! I'm Alexander, an undergraduate studying electrical engineering at Stanford
-              University. I am currently aiming towards a graduate degree in electrical engineering
-              and hoping to eventually work in industry. I am interested in the chip design aspect
-              of electrical engineering and more specifically, digital design and hardware
-              verification. I aspire to work in the intersection of chip design and artifical
-              intelligence in order to further push the power of chips.
+              Hello! I'm Alexander, an electrical engineering undergraduate at Stanford University.
+              I build sensor systems, boards, and embedded pipelines that turn real-world signals
+              into reliable data.
             </p>
 
-            <p>Feel free to reach out to me on any of my socials!</p>
+            <p>
+              I care about clean hardware architectures, fast signal processing, and the intersection
+              of chip design and AI. I'm always excited to collaborate on ambitious hardware projects.
+            </p>
 
             <p>Here are a few tools I’ve been working with recently:</p>
           </div>
@@ -170,6 +170,7 @@ const About = () => {
               src="../../images/me.jpg"
               width={500}
               quality={95}
+              placeholder="blurred"
               formats={['AUTO', 'WEBP', 'AVIF']}
               alt="Headshot"
             />

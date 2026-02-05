@@ -33,17 +33,18 @@ const StyledHeroSection = styled.section`
   h3 {
     margin-top: 5px;
     color: var(--slate);
-    line-height: 0.9;
+    line-height: 1.1;
   }
 
   p {
     margin: 20px 0 0;
-    max-width: 540px;
+    max-width: 600px;
+    font-size: clamp(var(--fz-md), 2.2vw, var(--fz-lg));
   }
 
   .email-link {
     ${({ theme }) => theme.mixins.bigButton};
-    margin-top: 50px;
+    margin-top: 40px;
   }
 `;
 
@@ -62,12 +63,13 @@ const Hero = () => {
 
   const one = <h1>Hi, my name is</h1>;
   const two = <h2 className="big-heading">Alexander Suen.</h2>;
-  const three = <h3 className="big-heading">I build things for the world.</h3>;
+  const three = <h3 className="big-heading">I design hardware for sensing and intelligent systems.</h3>;
   const four = (
     <>
       <p>
-        Undergraduate studying Electrical Engineering at Stanford University. I am passionate about
-        the intersection of chip design and AI.
+        Stanford EE undergraduate focused on PCB design, embedded signal processing, and
+        sensor systems. Recent work includes a non-invasive glucose wearable at KOS AI and
+        high-speed imaging hardware in the Arbabian Lab.
       </p>
     </>
   );

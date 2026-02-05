@@ -1,0 +1,59 @@
+Alexander Suen
+alexsuen@stanford.edu ∙ (925) 216-1759 ∙ linkedin.com/in/alexsuen
+EDUCATION
+Stanford University Stanford, CA | B.S in Electrical Engineering | GPA: 4.19
+Expected June 2028
+Relevant Coursework: Digital System Design, Circuits I & II, Signals and System I & II, Ordinary Differential Equations,
+Vector Calculus, Programming Abstractions in C++, Computer Vision: Foundations and Applications
+TECHNICAL SKILLS & AWARDS
+Technical Skills: Altium Designer, KiCad, LTSpice, NI Multisim, Verilog, Xilinx Vivado, Fusion 360 Electronics,
+MATLAB, Python, C++, Java, Arduino, Oscilloscopes, Digital Multimeters, Signal Generators
+Honors & Awards: USAPhO, AIME, Presenter at 2022 MRS International Conference, IEEE MIT URTC Presenter,
+Presenter at 68th AVS International Conference, 2 Journal Publications in IJRASET
+EXPERIENCE
+Electrical Engineer Intern, KOS AI - Palo Alto, CA
+March 2025 – November 2025
+• Designed hardware for a continuous, non-invasive blood glucose wearable monitor in a watch form factor.
+• Utilized Altium Designer for schematic capture and PCB layout for multi-board optical sensor system.
+• Engineered a two-board 6-layer PCB architecture connected via flex cable for biomedical wearable.
+• Optimized wearable sensor device size by ~25% by redesigning PCB layout and removing unnecessary components.
+• Collaborated with mechanical engineers to determine component placement and housing decisions.
+• Communicated with fabrication companies and adjusted designs to meet DFM constraints.
+Researcher, Stanford University Arbabian Lab - Stanford, CA
+September 2024 - Present
+• Engineered a 6-layer sensor logic board in Altium capable of supporting up to 128 sensors for imaging.
+• Utilized shift registers and clock buffers to manage signal routing scheme and connections to FPGA & MCU.
+• Executed component assembly, board bring-up, and unit testing of PCB using an Analog Discovery device.
+• Developed custom SPI sniffer in C++ to continuously decode sensor data in real-time, resolving a critical bottleneck.
+• Engineered pipeline on an ARM Cortex-M7 processor, achieving real-time decoding at 15 MHz clock speed.
+• Cut packet decoding time from 5s to 1ms (99% reduction) with a 4ms packet interval, enabling real-time analysis.
+• Characterized depth camera’s performance by designing experiments to establish its baseline accuracy.
+• Implemented custom hardware trigger circuit to externally synchronize camera, reducing latency between captures.
+• Created automatic calibration algorithm using image processing techniques to calculate camera’s tilt angle and offset.
+• Designed 2nd generation PCB sensor boards for sonar detection in ocean mapping using photoacoustic effect.
+• Used Altium Designer for schematic capture and PCB layout, focusing on reusability and iterability for the future.
+• Reduced board size by over 50% compared to previous generation due to circuit design changes.
+• Routed more than 400 traces across 4 layers and included GND & PWR polygon pours for protection.
+• Recorded data from sensor PCB via development kit and applied coherent average in MATLAB to remove noise.
+• Achieved a 70% reduction in signal variability through optimized experimental settings and data processing.
+Intern, NASA Ames Research Center - Mountain View, CA
+June 2023 – August 2023
+• Researched use of biodegradable drones paired with AI as an alternative to fight wildfires.
+• Created novel design that utilizes aqueous lithium-ion batteries and a mycelium structure.
+• Coordinated with two NASA engineers and implemented changes based on feedback from weekly meetings.
+• Published paper on NASA’s website and presented design to director of NASA Ames Research Center.
+PROJECTS
+Class D Audio Speaker
+• Assembled and soldered a complete Class D audio amplifier on a protoboard with filters.
+• Validated functionality with digital voltmeter and oscilloscope to measure core modulation frequency.
+• Characterized frequency response by applying sinusoidal input from 10Hz to 50kHz to generate Bode plot.
+• Analyzed and quantified metrics including THD and power efficiency under various signal magnitudes.
+• Integrated amplifier with stereo speakers and Bluetooth receiver, resulting in functional audio speaker system.
+Self-Leveling PCB System
+• PCB detects levelness of system and illuminates LEDs in correction direction.
+• Utilized open/closed circuit concept to assess tilt level and used 2-4 DEMUX to incrementally light up LEDs.
+• Designed and simulated circuit in NI Multisim SPICE-based circuit simulation software.
+• Created physical prototype on breadboard and used Fusion 360 Electronics for designing layout of PCB.
+• Masked, etched, drilled, and soldered copper board and components onto a single-layered copper board.
+
+

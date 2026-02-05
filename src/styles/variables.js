@@ -27,10 +27,10 @@ const variables = css`
     --fz-md: 16px;
     --fz-lg: 18px;
     --fz-xl: 20px;
-    --fz-xxl: 22px;
-    --fz-heading: 32px;
+    --fz-xxl: 24px;
+    --fz-heading: 36px;
 
-    --border-radius: 4px;
+    --border-radius: 6px;
     --nav-height: 100px;
     --nav-scroll-height: 70px;
 

@@ -10,4 +10,4 @@ tech:
 showInProjects: true
 ---
 
-Wrote design for 32-Bit CPU in Verilog, incorporating program and data memory, ALU, jump/branch instructions, and register files. Simulated and validated design through Xilinx Vivado waveform software by writing custom test benches.
+Designed a 32-bit CPU in Verilog with program/data memory, ALU, branching, and register file logic. Validated functionality in Vivado using custom test benches and waveform analysis.

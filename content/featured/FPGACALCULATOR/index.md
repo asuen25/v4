@@ -12,4 +12,4 @@ tech:
 showInProjects: true
 ---
 
-Calculator capable of basic math operations powered by a Xilinx FPGA. Keypad membrane transfers data to FPGA that controls LCD display with I2C communication protocol.
+Built a four-function calculator on a Xilinx FPGA with a keypad interface and I2C-driven LCD display. Implemented input parsing, operation logic, and display updates in Verilog.

@@ -160,6 +160,7 @@ const StyledProject = styled.li`
     background-color: var(--light-navy);
     color: var(--light-slate);
     font-size: var(--fz-lg);
+    line-height: 1.6;
 
     @media (max-width: 768px) {
       padding: 20px 0;
@@ -186,7 +187,7 @@ const StyledProject = styled.li`
     flex-wrap: wrap;
     position: relative;
     z-index: 2;
-    margin: 25px 0 10px;
+    margin: 20px 0 12px;
     padding: 0;
     list-style: none;
 
@@ -401,7 +402,7 @@ const Featured = () => {
 
                 <div className="project-image">
                   <a href={external ? external : github ? github : '#'}>
-                    <GatsbyImage image={image} alt={title} className="img" />
+                    <GatsbyImage image={image} alt={title} className="img" loading="lazy" />
                   </a>
                 </div>
               </StyledProject>

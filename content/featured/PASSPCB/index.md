@@ -9,5 +9,4 @@ tech:
   - TDK SmartSonic
 ---
 
-PCB board aimed at detecting objects underwater using high performance Time-of-Flight sensors in experimental settings. Incorporated various testing ports and ability to connect to external
-development kit for data acquisition.
+Designed a photoacoustic sensor breakout PCB for underwater detection experiments using high-performance Time-of-Flight sensors. Added test ports and a dev-kit header for repeatable data acquisition and characterization.
