@@ -27,7 +27,7 @@
       "prettier --write"
     ],
     "*.js": [
-      "eslint --fix"
+      "eslint"
     ]
   },
   "dependencies": {
