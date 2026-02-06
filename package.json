@@ -15,7 +15,11 @@
     "node": ">=20.0.0 <21"
   },
   "overrides": {
-    "webpack": "5.98.0"
+    "@parcel/reporter-dev-server": "2.16.4",
+    "cookie": "1.1.1",
+    "lodash.template": "4.5.0",
+    "tmp": "0.2.5",
+    "webpack": "5.105.0"
   },
   "browserslist": "> 0.25%, not dead",
   "scripts": {
@@ -44,13 +48,12 @@
     "gatsby-plugin-image": "^3.16.0",
     "gatsby-plugin-manifest": "^5.16.0",
     "gatsby-plugin-netlify": "^5.1.1",
-    "gatsby-plugin-offline": "^6.16.0",
     "gatsby-plugin-react-helmet": "^6.16.0",
     "gatsby-plugin-robots-txt": "^1.8.0",
     "gatsby-plugin-sharp": "^5.16.0",
     "gatsby-plugin-sitemap": "^6.16.0",
     "gatsby-plugin-styled-components": "^6.16.0",
-    "gatsby-remark-external-links": "0.0.4",
+    "gatsby-remark-external-links": "^0.0.4",
     "gatsby-remark-images": "^7.16.0",
     "gatsby-remark-prismjs": "^7.16.0",
     "gatsby-source-filesystem": "^5.16.0",

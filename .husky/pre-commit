@@ -1,11 +1,18 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-# Load nvm and set up the environment
+# Load nvm if available and set up Node
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-# Use the correct Node.js version
-nvm use 16
+# Prefer nvm (per .nvmrc); fall back to local Node install if present
+if command -v nvm >/dev/null 2>&1; then
+  nvm use
+elif [ -x "/bigdata/users/$USER/local/node-v20.11.1-linux-x64/bin/node" ]; then
+  export PATH="/bigdata/users/$USER/local/node-v20.11.1-linux-x64/bin:$PATH"
+elif [ -x "$HOME/local/node-v20.11.1-linux-x64/bin/node" ]; then
+  export PATH="$HOME/local/node-v20.11.1-linux-x64/bin:$PATH"
+fi
 
+export NODE_ENV=test
 npm run lint-staged
