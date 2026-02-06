@@ -15,7 +15,6 @@
     "node": ">=20.0.0 <21"
   },
   "overrides": {
-    "@parcel/reporter-dev-server": "2.16.4",
     "cookie": "1.1.1",
     "lodash.template": "4.5.0",
     "tmp": "0.2.5",
