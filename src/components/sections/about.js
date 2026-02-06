@@ -7,7 +7,7 @@ import getScrollReveal from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
 
 const StyledAboutSection = styled.section`
-  max-width: 900px;
+  max-width: 100%;
 
   .inner {
     display: grid;

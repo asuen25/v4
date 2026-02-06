@@ -1,0 +1,10 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+msg_file="$1"
+
+if [ -f "$msg_file" ]; then
+  tmp_file="$(mktemp)"
+  sed '/^Co-authored-by: Cursor <cursoragent@cursor.com>$/d' "$msg_file" > "$tmp_file" &&
+    mv "$tmp_file" "$msg_file"
+fi

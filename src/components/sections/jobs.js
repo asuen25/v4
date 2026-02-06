@@ -8,7 +8,7 @@ import getScrollReveal from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
 
 const StyledJobsSection = styled.section`
-  max-width: 700px;
+  max-width: 100%;
 
   .inner {
     display: flex;
