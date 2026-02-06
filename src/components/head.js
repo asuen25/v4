@@ -1,78 +1,72 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
-import { useLocation } from '@reach/router';
-import { useStaticQuery, graphql } from 'gatsby';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import siteMetadata from '@config/site';
 
 // https://www.gatsbyjs.com/docs/add-seo-component/
 
-const Head = ({ title, description, image }) => {
-  const { pathname } = useLocation();
-
-  const { site } = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            defaultTitle: title
-            defaultDescription: description
-            siteUrl
-            defaultImage: image
-            twitterUsername
-          }
-        }
-      }
-    `,
-  );
-
+const Seo = ({ title, description, image }) => {
+  const router = useRouter();
   const {
-    defaultTitle,
-    defaultDescription,
+    title: defaultTitle,
+    description: defaultDescription,
     siteUrl,
-    defaultImage,
+    image: defaultImage,
     twitterUsername,
-  } = site.siteMetadata;
+    googleSiteVerification,
+    themeColor,
+    backgroundColor,
+  } = siteMetadata;
 
+  const pathname = router.asPath.split('?')[0] || '';
   const seo = {
     title: title || defaultTitle,
     description: description || defaultDescription,
     image: `${siteUrl}${image || defaultImage}`,
     url: `${siteUrl}${pathname}`,
   };
+  const pageTitle = title ? `${title} | ${defaultTitle}` : defaultTitle;
 
   return (
-    <Helmet title={title} defaultTitle={seo.title} titleTemplate={`%s | ${defaultTitle}`}>
-      <html lang="en" />
+    <>
+      <Head>
+        <html lang="en" />
+        <title>{pageTitle}</title>
 
-      <meta name="description" content={seo.description} />
-      <meta name="image" content={seo.image} />
+        <meta name="description" content={seo.description} />
+        <meta name="image" content={seo.image} />
 
-      <meta property="og:title" content={seo.title} />
-      <meta property="og:description" content={seo.description} />
-      <meta property="og:image" content={seo.image} />
-      <meta property="og:url" content={seo.url} />
-      <meta property="og:type" content="website" />
+        <meta property="og:title" content={seo.title} />
+        <meta property="og:description" content={seo.description} />
+        <meta property="og:image" content={seo.image} />
+        <meta property="og:url" content={seo.url} />
+        <meta property="og:type" content="website" />
 
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:creator" content={twitterUsername} />
-      <meta name="twitter:title" content={seo.title} />
-      <meta name="twitter:description" content={seo.description} />
-      <meta name="twitter:image" content={seo.image} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:creator" content={twitterUsername} />
+        <meta name="twitter:title" content={seo.title} />
+        <meta name="twitter:description" content={seo.description} />
+        <meta name="twitter:image" content={seo.image} />
 
-      <meta name="google-site-verification" content="DCl7VAf9tcz6eD9gb67NfkNnJ1PKRNcg8qQiwpbx9Lk" />
-    </Helmet>
+        <meta name="google-site-verification" content={googleSiteVerification} />
+        <meta name="theme-color" content={themeColor} />
+        <meta name="background-color" content={backgroundColor} />
+        <link rel="manifest" href="/manifest.json" />
+      </Head>
+    </>
   );
 };
 
-export default Head;
+export default Seo;
 
-Head.propTypes = {
+Seo.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   image: PropTypes.string,
 };
 
-Head.defaultProps = {
+Seo.defaultProps = {
   title: null,
   description: null,
   image: null,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'gatsby';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled, { css } from 'styled-components';
@@ -170,7 +170,7 @@ const Nav = ({ isHome }) => {
                 navLinks.map(({ url, name }, i) => (
                   <CSSTransition key={i} classNames={fadeDownClass} timeout={timeout}>
                     <li key={i} style={{ transitionDelay: `${isHome ? i * 100 : 0}ms` }}>
-                      <Link to={url}>{name}</Link>
+                      <Link href={url}>{name}</Link>
                     </li>
                   </CSSTransition>
                 ))}

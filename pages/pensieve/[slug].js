@@ -1,9 +1,11 @@
 import React from 'react';
-import { graphql, Link } from 'gatsby';
-import kebabCase from 'lodash/kebabCase';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Link from 'next/link';
+import kebabCase from 'lodash/kebabCase';
+import { useRouter } from 'next/router';
 import { Layout, Seo } from '@components';
+import { getPostBySlug, getPostSlugs } from '@lib/content';
 
 const StyledPostContainer = styled.main`
   max-width: 1000px;
@@ -49,16 +51,28 @@ const StyledPostContent = styled.div`
   }
 `;
 
-const PostTemplate = ({ data, location }) => {
-  const { frontmatter, html } = data.markdownRemark;
+const PostPage = ({ post }) => {
+  const router = useRouter();
+  const hashIndex = router.asPath.indexOf('#');
+  const location = {
+    pathname: router.pathname,
+    hash: hashIndex >= 0 ? router.asPath.slice(hashIndex) : '',
+  };
+
+  if (!post) {
+    return null;
+  }
+
+  const { frontmatter, html } = post;
   const { title, date, tags } = frontmatter;
 
   return (
     <Layout location={location}>
+      <Seo title={frontmatter?.title} description={frontmatter?.description} />
       <StyledPostContainer>
         <span className="breadcrumb">
           <span className="arrow">&larr;</span>
-          <Link to="/pensieve">All memories</Link>
+          <Link href="/pensieve">All memories</Link>
         </span>
 
         <StyledPostHeader>
@@ -75,7 +89,7 @@ const PostTemplate = ({ data, location }) => {
             {tags &&
               tags.length > 0 &&
               tags.map((tag, i) => (
-                <Link key={i} to={`/pensieve/tags/${kebabCase(tag)}/`} className="tag">
+                <Link key={i} href={`/pensieve/tags/${kebabCase(tag)}/`} className="tag">
                   #{tag}
                 </Link>
               ))}
@@ -88,31 +102,40 @@ const PostTemplate = ({ data, location }) => {
   );
 };
 
-export default PostTemplate;
-
-export const Head = ({ data, location }) => {
-  const frontmatter = data?.markdownRemark?.frontmatter;
-  return (
-    <Seo title={frontmatter?.title} description={frontmatter?.description} location={location} />
-  );
+PostPage.propTypes = {
+  post: PropTypes.shape({
+    frontmatter: PropTypes.object,
+    html: PropTypes.string,
+  }),
 };
 
-PostTemplate.propTypes = {
-  data: PropTypes.object,
-  location: PropTypes.object,
+PostPage.defaultProps = {
+  post: null,
 };
 
-export const pageQuery = graphql`
-  query ($slug: String!) {
-    markdownRemark(frontmatter: { slug: { eq: $slug } }) {
-      html
-      frontmatter {
-        title
-        description
-        date
-        slug
-        tags
-      }
-    }
-  }
-`;
+export async function getStaticPaths() {
+  const slugs = getPostSlugs();
+  const paths = slugs.map(slug => ({
+    params: {
+      slug: slug.replace(/^\/pensieve\//, '').replace(/\/$/, ''),
+    },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const slugParam = params?.slug || '';
+  const post = await getPostBySlug(`/pensieve/${slugParam}`);
+
+  return {
+    props: {
+      post,
+    },
+  };
+}
+
+export default PostPage;

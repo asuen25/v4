@@ -5,6 +5,10 @@ yarn-error.log
 
 # Build directory
 /public
+.next
+.next-cache
+out
+.netlify
 .DS_Store
 
 .vscode/

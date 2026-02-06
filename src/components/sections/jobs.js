@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 import { srConfig } from '@config';
 import { KEY_CODES } from '@utils';
-import sr from '@utils/sr';
+import getScrollReveal from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
 
 const StyledJobsSection = styled.section`
@@ -164,30 +164,8 @@ const StyledTabPanel = styled.div`
   }
 `;
 
-const Jobs = () => {
-  const data = useStaticQuery(graphql`
-    query {
-      jobs: allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/content/jobs/" } }
-        sort: { fields: [frontmatter___date], order: DESC }
-      ) {
-        edges {
-          node {
-            frontmatter {
-              title
-              company
-              location
-              range
-              url
-            }
-            html
-          }
-        }
-      }
-    }
-  `);
-
-  const jobsData = data.jobs.edges;
+const Jobs = ({ jobs }) => {
+  const jobsData = jobs || [];
 
   const [activeTabId, setActiveTabId] = useState(0);
   const [tabFocus, setTabFocus] = useState(null);
@@ -200,7 +178,18 @@ const Jobs = () => {
       return;
     }
 
-    sr.reveal(revealContainer.current, srConfig());
+    let isMounted = true;
+    const reveal = async () => {
+      const sr = await getScrollReveal();
+      if (!sr || !isMounted) {
+        return;
+      }
+      sr.reveal(revealContainer.current, srConfig());
+    };
+    reveal();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const focusTab = () => {
@@ -249,8 +238,8 @@ const Jobs = () => {
       <div className="inner">
         <StyledTabList role="tablist" aria-label="Job tabs" onKeyDown={e => onKeyDown(e)}>
           {jobsData &&
-            jobsData.map(({ node }, i) => {
-              const { company } = node.frontmatter;
+            jobsData.map(({ frontmatter }, i) => {
+              const { company } = frontmatter;
               return (
                 <StyledTabButton
                   key={i}
@@ -271,8 +260,7 @@ const Jobs = () => {
 
         <StyledTabPanels>
           {jobsData &&
-            jobsData.map(({ node }, i) => {
-              const { frontmatter, html } = node;
+            jobsData.map(({ frontmatter, html }, i) => {
               const { title, url, company, range } = frontmatter;
 
               return (
@@ -305,6 +293,25 @@ const Jobs = () => {
       </div>
     </StyledJobsSection>
   );
+};
+
+Jobs.defaultProps = {
+  jobs: [],
+};
+
+Jobs.propTypes = {
+  jobs: PropTypes.arrayOf(
+    PropTypes.shape({
+      frontmatter: PropTypes.shape({
+        title: PropTypes.string,
+        company: PropTypes.string,
+        location: PropTypes.string,
+        range: PropTypes.string,
+        url: PropTypes.string,
+      }),
+      html: PropTypes.string,
+    }),
+  ),
 };
 
 export default Jobs;

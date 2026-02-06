@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useStaticQuery, graphql } from 'gatsby';
+import PropTypes from 'prop-types';
+import Link from 'next/link';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
 import { srConfig } from '@config';
-import sr from '@utils/sr';
+import getScrollReveal from '@utils/sr';
 import { Icon } from '@components/icons';
 import { usePrefersReducedMotion } from '@hooks';
 
@@ -165,31 +166,7 @@ const StyledProject = styled.li`
   }
 `;
 
-const Projects = () => {
-  const data = useStaticQuery(graphql`
-    query {
-      projects: allMarkdownRemark(
-        filter: {
-          fileAbsolutePath: { regex: "/content/projects/" }
-          frontmatter: { showInProjects: { ne: false } }
-        }
-        sort: { fields: [frontmatter___date], order: DESC }
-      ) {
-        edges {
-          node {
-            frontmatter {
-              title
-              tech
-              github
-              external
-            }
-            html
-          }
-        }
-      }
-    }
-  `);
-
+const Projects = ({ projects }) => {
   const [showMore, setShowMore] = useState(false);
   const revealTitle = useRef(null);
   const revealArchiveLink = useRef(null);
@@ -201,18 +178,29 @@ const Projects = () => {
       return;
     }
 
-    sr.reveal(revealTitle.current, srConfig());
-    sr.reveal(revealArchiveLink.current, srConfig());
-    revealProjects.current.forEach((ref, i) => sr.reveal(ref, srConfig(i * 100)));
+    let isMounted = true;
+    const reveal = async () => {
+      const sr = await getScrollReveal();
+      if (!sr || !isMounted) {
+        return;
+      }
+      sr.reveal(revealTitle.current, srConfig());
+      sr.reveal(revealArchiveLink.current, srConfig());
+      revealProjects.current.forEach((ref, i) => sr.reveal(ref, srConfig(i * 100)));
+    };
+    reveal();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const GRID_LIMIT = 6;
-  const projects = data.projects.edges.filter(({ node }) => node);
-  const firstSix = projects.slice(0, GRID_LIMIT);
-  const projectsToShow = showMore ? projects : firstSix;
+  const projectList = (projects || []).filter(Boolean);
+  const firstSix = projectList.slice(0, GRID_LIMIT);
+  const projectsToShow = showMore ? projectList : firstSix;
 
-  const projectInner = node => {
-    const { frontmatter, html } = node;
+  const projectInner = project => {
+    const { frontmatter, html } = project;
     const { github, external, title, tech } = frontmatter;
 
     return (
@@ -267,7 +255,7 @@ const Projects = () => {
     <StyledProjectsSection>
       <h2 ref={revealTitle}>Other Noteworthy Projects</h2>
 
-      <Link className="inline-link archive-link" to="/archive" ref={revealArchiveLink}>
+      <Link className="inline-link archive-link" href="/archive" ref={revealArchiveLink}>
         view the archive
       </Link>
 
@@ -275,14 +263,14 @@ const Projects = () => {
         {prefersReducedMotion ? (
           <>
             {projectsToShow &&
-              projectsToShow.map(({ node }, i) => (
-                <StyledProject key={i}>{projectInner(node)}</StyledProject>
+              projectsToShow.map((project, i) => (
+                <StyledProject key={i}>{projectInner(project)}</StyledProject>
               ))}
           </>
         ) : (
           <TransitionGroup component={null}>
             {projectsToShow &&
-              projectsToShow.map(({ node }, i) => (
+              projectsToShow.map((project, i) => (
                 <CSSTransition
                   key={i}
                   classNames="fadeup"
@@ -294,7 +282,7 @@ const Projects = () => {
                     style={{
                       transitionDelay: `${i >= GRID_LIMIT ? (i - GRID_LIMIT) * 100 : 0}ms`,
                     }}>
-                    {projectInner(node)}
+                    {projectInner(project)}
                   </StyledProject>
                 </CSSTransition>
               ))}
@@ -307,6 +295,24 @@ const Projects = () => {
       </button>
     </StyledProjectsSection>
   );
+};
+
+Projects.defaultProps = {
+  projects: [],
+};
+
+Projects.propTypes = {
+  projects: PropTypes.arrayOf(
+    PropTypes.shape({
+      frontmatter: PropTypes.shape({
+        title: PropTypes.string,
+        tech: PropTypes.arrayOf(PropTypes.string),
+        github: PropTypes.string,
+        external: PropTypes.string,
+      }),
+      html: PropTypes.string,
+    }),
+  ),
 };
 
 export default Projects;

@@ -1,10 +1,12 @@
 import React from 'react';
-import { graphql, Link } from 'gatsby';
-import kebabCase from 'lodash/kebabCase';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Link from 'next/link';
+import kebabCase from 'lodash/kebabCase';
+import { useRouter } from 'next/router';
 import { Layout, Seo } from '@components';
 import { IconBookmark } from '@components/icons';
+import { getPostsForListing } from '@lib/content';
 
 const StyledMainContainer = styled.main`
   & > header {
@@ -142,11 +144,17 @@ const StyledPost = styled.li`
   }
 `;
 
-const PensievePage = ({ location, data }) => {
-  const posts = data.allMarkdownRemark.edges;
+const PensievePage = ({ posts }) => {
+  const router = useRouter();
+  const hashIndex = router.asPath.indexOf('#');
+  const location = {
+    pathname: router.pathname,
+    hash: hashIndex >= 0 ? router.asPath.slice(hashIndex) : '',
+  };
 
   return (
     <Layout location={location}>
+      <Seo title="Pensieve" />
       <StyledMainContainer>
         <header>
           <h1 className="big-heading">Pensieve</h1>
@@ -159,9 +167,8 @@ const PensievePage = ({ location, data }) => {
 
         <StyledGrid>
           {posts.length > 0 &&
-            posts.map(({ node }, i) => {
-              const { frontmatter } = node;
-              const { title, description, slug, date, tags } = frontmatter;
+            posts.map((post, i) => {
+              const { title, description, slug, date, tags } = post;
               const formattedDate = new Date(date).toLocaleDateString();
 
               return (
@@ -172,7 +179,7 @@ const PensievePage = ({ location, data }) => {
                         <IconBookmark />
                       </div>
                       <h5 className="post__title">
-                        <Link to={slug}>{title}</Link>
+                        <Link href={slug}>{title}</Link>
                       </h5>
                       <p className="post__desc">{description}</p>
                     </header>
@@ -180,9 +187,11 @@ const PensievePage = ({ location, data }) => {
                     <footer>
                       <span className="post__date">{formattedDate}</span>
                       <ul className="post__tags">
-                        {tags.map((tag, i) => (
-                          <li key={i}>
-                            <Link to={`/pensieve/tags/${kebabCase(tag)}/`} className="inline-link">
+                        {tags.map((tag, tagIndex) => (
+                          <li key={tagIndex}>
+                            <Link
+                              href={`/pensieve/tags/${kebabCase(tag)}/`}
+                              className="inline-link">
                               #{tag}
                             </Link>
                           </li>
@@ -200,36 +209,28 @@ const PensievePage = ({ location, data }) => {
 };
 
 PensievePage.propTypes = {
-  location: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired,
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      description: PropTypes.string,
+      slug: PropTypes.string,
+      date: PropTypes.string,
+      tags: PropTypes.arrayOf(PropTypes.string),
+    }),
+  ),
 };
 
+PensievePage.defaultProps = {
+  posts: [],
+};
+
+export async function getStaticProps() {
+  const posts = await getPostsForListing();
+  return {
+    props: {
+      posts,
+    },
+  };
+}
+
 export default PensievePage;
-
-export const Head = ({ location }) => <Seo title="Pensieve" location={location} />;
-
-export const pageQuery = graphql`
-  {
-    allMarkdownRemark(
-      filter: {
-        fileAbsolutePath: { regex: "/content/posts/" }
-        frontmatter: { draft: { ne: true } }
-      }
-      sort: { frontmatter: { date: DESC } }
-    ) {
-      edges {
-        node {
-          frontmatter {
-            title
-            description
-            slug
-            date
-            tags
-            draft
-          }
-          html
-        }
-      }
-    }
-  }
-`;

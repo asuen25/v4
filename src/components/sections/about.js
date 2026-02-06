@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { StaticImage } from 'gatsby-plugin-image';
+import Image from 'next/image';
+import headshot from '@images/me.jpg';
 import styled from 'styled-components';
 import { srConfig } from '@config';
-import sr from '@utils/sr';
+import getScrollReveal from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
 
 const StyledAboutSection = styled.section`
@@ -123,7 +124,18 @@ const About = () => {
       return;
     }
 
-    sr.reveal(revealContainer.current, srConfig());
+    let isMounted = true;
+    const reveal = async () => {
+      const sr = await getScrollReveal();
+      if (!sr || !isMounted) {
+        return;
+      }
+      sr.reveal(revealContainer.current, srConfig());
+    };
+    reveal();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const skills = [
@@ -151,8 +163,9 @@ const About = () => {
             </p>
 
             <p>
-              I care about clean hardware architectures, fast signal processing, and the intersection
-              of chip design and AI. I'm always excited to collaborate on ambitious hardware projects.
+              I care about clean hardware architectures, fast signal processing, and the
+              intersection of chip design and AI. I'm always excited to collaborate on ambitious
+              hardware projects.
             </p>
 
             <p>Here are a few tools I’ve been working with recently:</p>
@@ -165,13 +178,12 @@ const About = () => {
 
         <StyledPic>
           <div className="wrapper">
-            <StaticImage
+            <Image
               className="img"
-              src="../../images/me.jpg"
+              src={headshot}
               width={500}
               quality={95}
-              placeholder="blurred"
-              formats={['AUTO', 'WEBP', 'AVIF']}
+              placeholder="blur"
               alt="Headshot"
             />
           </div>

@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { ThemeProvider } from 'styled-components';
-import { Head, Loader, Nav, Social, Email, Footer } from '@components';
+import dynamic from 'next/dynamic';
+import { Footer } from '@components';
 import { GlobalStyle, theme } from '@styles';
+
+const Loader = dynamic(() => import('@components/loader'), { ssr: false });
+const Nav = dynamic(() => import('@components/nav'), { ssr: false });
+const Social = dynamic(() => import('@components/social'), { ssr: false });
+const Email = dynamic(() => import('@components/email'), { ssr: false });
 
 const StyledContent = styled.div`
   display: flex;
@@ -11,11 +17,15 @@ const StyledContent = styled.div`
 `;
 
 const Layout = ({ children, location }) => {
+  const isServer = typeof window === 'undefined';
   const isHome = location.pathname === '/';
-  const [isLoading, setIsLoading] = useState(isHome);
+  const [isLoading, setIsLoading] = useState(isHome && !isServer);
 
   // Sets target="_blank" rel="noopener noreferrer" on external links
   const handleExternalLinks = () => {
+    if (typeof document === 'undefined') {
+      return;
+    }
     const allLinks = Array.from(document.querySelectorAll('a'));
     if (allLinks.length > 0) {
       allLinks.forEach(link => {
@@ -28,6 +38,9 @@ const Layout = ({ children, location }) => {
   };
 
   useEffect(() => {
+    if (isServer) {
+      return;
+    }
     if (isLoading) {
       return;
     }
@@ -48,8 +61,6 @@ const Layout = ({ children, location }) => {
 
   return (
     <>
-      <Head />
-
       <div id="root">
         <ThemeProvider theme={theme}>
           <GlobalStyle />
@@ -58,13 +69,17 @@ const Layout = ({ children, location }) => {
             Skip to Content
           </a>
 
-          {isLoading && isHome ? (
+          {isLoading && isHome && !isServer ? (
             <Loader finishLoading={() => setIsLoading(false)} />
           ) : (
             <StyledContent>
-              <Nav isHome={isHome} />
-              <Social isHome={isHome} />
-              <Email isHome={isHome} />
+              {!isServer && (
+                <>
+                  <Nav isHome={isHome} />
+                  <Social isHome={isHome} />
+                  <Email isHome={isHome} />
+                </>
+              )}
 
               <div id="content">
                 {children}

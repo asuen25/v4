@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { srConfig, email } from '@config';
-import sr from '@utils/sr';
+import getScrollReveal from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
 
 const StyledContactSection = styled.section`
@@ -50,7 +50,18 @@ const Contact = () => {
       return;
     }
 
-    sr.reveal(revealContainer.current, srConfig());
+    let isMounted = true;
+    const reveal = async () => {
+      const sr = await getScrollReveal();
+      if (!sr || !isMounted) {
+        return;
+      }
+      sr.reveal(revealContainer.current, srConfig());
+    };
+    reveal();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
