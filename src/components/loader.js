@@ -46,10 +46,10 @@ const Loader = ({ finishLoading }) => {
     return length;
   };
 
-  const animate = async () => {
+  const animate = async onComplete => {
     const { createTimeline } = await import('animejs');
     const loader = createTimeline({
-      complete: () => finishLoading(),
+      complete: () => onComplete(),
     });
 
     loader
@@ -81,8 +81,27 @@ const Loader = ({ finishLoading }) => {
 
   useEffect(() => {
     const timeout = setTimeout(() => setIsMounted(true), 10);
-    animate();
-    return () => clearTimeout(timeout);
+    let finished = false;
+    const handleFinish = () => {
+      if (finished) {
+        return;
+      }
+      finished = true;
+      finishLoading();
+    };
+    const fallback = setTimeout(handleFinish, 4000);
+    const run = async () => {
+      try {
+        await animate(handleFinish);
+      } catch (error) {
+        handleFinish();
+      }
+    };
+    run();
+    return () => {
+      clearTimeout(timeout);
+      clearTimeout(fallback);
+    };
   }, []);
 
   useEffect(() => {
