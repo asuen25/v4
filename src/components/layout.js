@@ -8,7 +8,6 @@ import { GlobalStyle, theme } from '@styles';
 const Loader = dynamic(() => import('@components/loader'), { ssr: false });
 const Nav = dynamic(() => import('@components/nav'), { ssr: false });
 const Social = dynamic(() => import('@components/social'), { ssr: false });
-const Email = dynamic(() => import('@components/email'), { ssr: false });
 
 const StyledContent = styled.div`
   display: flex;
@@ -77,7 +76,6 @@ const Layout = ({ children, location }) => {
                 <>
                   <Nav isHome={isHome} />
                   <Social isHome={isHome} />
-                  <Email isHome={isHome} />
                 </>
               )}
 

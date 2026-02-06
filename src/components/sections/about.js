@@ -60,7 +60,7 @@ const StyledPic = styled.div`
     display: block;
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 4;
     overflow: hidden;
     border-radius: var(--border-radius);
     background-color: transparent;
@@ -86,7 +86,8 @@ const StyledPic = styled.div`
       position: relative;
       width: 100% !important;
       height: 100% !important;
-      object-fit: cover;
+      object-fit: contain;
+      object-position: center top;
       border-radius: var(--border-radius);
       mix-blend-mode: normal;
       filter: none;

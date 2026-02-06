@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   IconAppStore,
   IconCodepen,
+  IconEmail,
   IconFolder,
   IconFork,
   IconGitHub,
@@ -18,6 +19,8 @@ const Icon = ({ name }) => {
       return <IconAppStore />;
     case 'Codepen':
       return <IconCodepen />;
+    case 'Email':
+      return <IconEmail />;
     case 'Folder':
       return <IconFolder />;
     case 'Fork':

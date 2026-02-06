@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { socialMedia } from '@config';
+import { socialMedia, email } from '@config';
 import { Side } from '@components';
 import { Icon } from '@components/icons';
 
@@ -54,6 +54,11 @@ const Social = ({ isHome }) => (
             </a>
           </li>
         ))}
+      <li>
+        <a href={`mailto:${email}`} aria-label="Email">
+          <Icon name="Email" />
+        </a>
+      </li>
     </StyledSocialList>
   </Side>
 );
