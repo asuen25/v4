@@ -247,15 +247,21 @@ const StyledProject = styled.li`
     grid-row: 1 / -1;
     position: relative;
     z-index: 1;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
 
     @media (max-width: 768px) {
       grid-column: 1 / -1;
       height: 100%;
+      aspect-ratio: unset;
       opacity: 0.25;
     }
 
     a {
+      position: relative;
       width: 100%;
+      height: 100%;
+      display: block;
       background-color: transparent;
       border-radius: var(--border-radius);
       vertical-align: middle;
@@ -288,6 +294,9 @@ const StyledProject = styled.li`
     }
 
     .img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover;
       border-radius: var(--border-radius);
       mix-blend-mode: multiply;
       filter: none;
@@ -390,8 +399,7 @@ const Featured = ({ projects }) => {
                         src={coverPublicPath}
                         alt={title}
                         className="img"
-                        width={700}
-                        height={438}
+                        fill
                         sizes="(max-width: 768px) 100vw, 700px"
                       />
                     )}

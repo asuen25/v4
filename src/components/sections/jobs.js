@@ -9,9 +9,15 @@ import { usePrefersReducedMotion } from '@hooks';
 
 const StyledJobsSection = styled.section`
   max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .inner {
     display: flex;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
 
     @media (max-width: 600px) {
       display: block;

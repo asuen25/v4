@@ -60,6 +60,8 @@ const StyledPic = styled.div`
     display: block;
     position: relative;
     width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
     border-radius: var(--border-radius);
     background-color: transparent;
 
@@ -82,6 +84,9 @@ const StyledPic = styled.div`
 
     .img {
       position: relative;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover;
       border-radius: var(--border-radius);
       mix-blend-mode: normal;
       filter: none;
@@ -181,10 +186,11 @@ const About = () => {
             <Image
               className="img"
               src={headshot}
-              width={500}
+              fill
               quality={95}
               placeholder="blur"
               alt="Headshot"
+              sizes="300px"
             />
           </div>
         </StyledPic>
