@@ -53,6 +53,7 @@ const Seo = ({ title, description, image }) => {
         <meta name="theme-color" content={themeColor} />
         <meta name="background-color" content={backgroundColor} />
         <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/favicon.svg" />
       </Head>
     </>
   );

@@ -1,0 +1,15 @@
+{
+  "name": "Alexander Suen",
+  "short_name": "Alexander Suen",
+  "start_url": "/",
+  "background_color": "#04162a",
+  "theme_color": "#0b223d",
+  "display": "minimal-ui",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

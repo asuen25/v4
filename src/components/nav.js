@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -129,6 +129,10 @@ const Nav = ({ isHome }) => {
   const [isMounted, setIsMounted] = useState(!isHome);
   const scrollDirection = useScrollDirection('down');
   const [scrolledToTop, setScrolledToTop] = useState(true);
+  const logoRef = useRef(null);
+  const menuRef = useRef(null);
+  const resumeRef = useRef(null);
+  const linkRefs = useRef([]);
 
   const handleScroll = () => {
     setScrolledToTop(window.pageYOffset < 50);
@@ -156,8 +160,8 @@ const Nav = ({ isHome }) => {
       <StyledNav>
         <TransitionGroup component={null}>
           {isMounted && (
-            <CSSTransition classNames={fadeClass} timeout={timeout}>
-              <div className="logo" tabIndex="-1"></div>
+            <CSSTransition classNames={fadeClass} timeout={timeout} nodeRef={logoRef}>
+              <div ref={logoRef} className="logo" tabIndex="-1"></div>
             </CSSTransition>
           )}
         </TransitionGroup>
@@ -167,20 +171,32 @@ const Nav = ({ isHome }) => {
             <TransitionGroup component={null}>
               {isMounted &&
                 navLinks &&
-                navLinks.map(({ url, name }, i) => (
-                  <CSSTransition key={i} classNames={fadeDownClass} timeout={timeout}>
-                    <li key={i} style={{ transitionDelay: `${isHome ? i * 100 : 0}ms` }}>
-                      <Link href={url}>{name}</Link>
-                    </li>
-                  </CSSTransition>
-                ))}
+                navLinks.map(({ url, name }, i) => {
+                  const linkRef = linkRefs.current[i] || (linkRefs.current[i] = React.createRef());
+                  return (
+                    <CSSTransition
+                      key={i}
+                      classNames={fadeDownClass}
+                      timeout={timeout}
+                      nodeRef={linkRef}>
+                      <li
+                        ref={linkRef}
+                        key={i}
+                        style={{ transitionDelay: `${isHome ? i * 100 : 0}ms` }}>
+                        <Link href={url}>{name}</Link>
+                      </li>
+                    </CSSTransition>
+                  );
+                })}
             </TransitionGroup>
           </ol>
 
           <TransitionGroup component={null}>
             {isMounted && (
-              <CSSTransition classNames={fadeDownClass} timeout={timeout}>
-                <div style={{ transitionDelay: `${isHome ? navLinks.length * 100 : 0}ms` }}>
+              <CSSTransition classNames={fadeDownClass} timeout={timeout} nodeRef={resumeRef}>
+                <div
+                  ref={resumeRef}
+                  style={{ transitionDelay: `${isHome ? navLinks.length * 100 : 0}ms` }}>
                   <a
                     className="resume-button"
                     href="/resume.pdf"
@@ -196,8 +212,10 @@ const Nav = ({ isHome }) => {
 
         <TransitionGroup component={null}>
           {isMounted && (
-            <CSSTransition classNames={fadeClass} timeout={timeout}>
-              <Menu />
+            <CSSTransition classNames={fadeClass} timeout={timeout} nodeRef={menuRef}>
+              <div ref={menuRef}>
+                <Menu />
+              </div>
             </CSSTransition>
           )}
         </TransitionGroup>

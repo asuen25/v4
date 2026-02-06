@@ -4,7 +4,9 @@ node_modules
 yarn-error.log
 
 # Build directory
-/public
+/public/*
+!/public/manifest.json
+!/public/favicon.svg
 .next
 .next-cache
 out

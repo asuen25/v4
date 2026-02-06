@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
 import { email } from '@config';
@@ -51,6 +51,7 @@ const StyledHeroSection = styled.section`
 const Hero = () => {
   const [isMounted, setIsMounted] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const itemRefs = useRef([]);
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -63,13 +64,15 @@ const Hero = () => {
 
   const one = <h1>Hi, my name is</h1>;
   const two = <h2 className="big-heading">Alexander Suen.</h2>;
-  const three = <h3 className="big-heading">I design hardware for sensing and intelligent systems.</h3>;
+  const three = (
+    <h3 className="big-heading">I design hardware for sensing and intelligent systems.</h3>
+  );
   const four = (
     <>
       <p>
-        Stanford EE undergraduate focused on PCB design, embedded signal processing, and
-        sensor systems. Recent work includes a non-invasive glucose wearable at KOS AI and
-        high-speed imaging hardware in the Arbabian Lab.
+        Stanford EE undergraduate focused on PCB design, embedded signal processing, and sensor
+        systems. Recent work includes a non-invasive glucose wearable at KOS AI and high-speed
+        imaging hardware in the Arbabian Lab.
       </p>
     </>
   );
@@ -92,11 +95,16 @@ const Hero = () => {
       ) : (
         <TransitionGroup component={null}>
           {isMounted &&
-            items.map((item, i) => (
-              <CSSTransition key={i} classNames="fadeup" timeout={loaderDelay}>
-                <div style={{ transitionDelay: `${i + 1}00ms` }}>{item}</div>
-              </CSSTransition>
-            ))}
+            items.map((item, i) => {
+              const itemRef = itemRefs.current[i] || (itemRefs.current[i] = React.createRef());
+              return (
+                <CSSTransition key={i} classNames="fadeup" timeout={loaderDelay} nodeRef={itemRef}>
+                  <div ref={itemRef} style={{ transitionDelay: `${i + 1}00ms` }}>
+                    {item}
+                  </div>
+                </CSSTransition>
+              );
+            })}
         </TransitionGroup>
       )}
     </StyledHeroSection>
