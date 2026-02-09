@@ -1,16 +1,16 @@
 import { css } from 'styled-components';
 
 const prismColors = {
-  bg: `#173457`,
-  lineHighlight: `#21426b`,
-  blue: `#78d4ff`,
-  purple: `#c3a6ff`,
-  green: `#bae67e`,
-  yellow: `#ffd580`,
-  orange: `#ffae57`,
-  red: `#ef6b73`,
-  grey: `#a2aabc`,
-  comment: `#8695b799`,
+  bg: `#f0f9ff`,
+  lineHighlight: `#e0f2fe`,
+  blue: `#2563eb`,
+  purple: `#7c3aed`,
+  green: `#059669`,
+  yellow: `#d97706`,
+  orange: `#ea580c`,
+  red: `#dc2626`,
+  grey: `#64748b`,
+  comment: `#94a3b8`,
 };
 
 // https://www.gatsbyjs.org/packages/gatsby-remark-prismjs

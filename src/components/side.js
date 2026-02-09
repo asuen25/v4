@@ -30,29 +30,32 @@ const Side = ({ children, isHome, orientation }) => {
   const nodeRef = useRef(null);
 
   useEffect(() => {
-    if (!isHome || prefersReducedMotion) {
+    if (!isHome) {
+      setIsMounted(true);
       return;
     }
+
+    if (prefersReducedMotion) {
+      setIsMounted(true);
+      return;
+    }
+
     const timeout = setTimeout(() => setIsMounted(true), loaderDelay);
     return () => clearTimeout(timeout);
-  }, []);
+  }, [isHome, prefersReducedMotion]);
 
   return (
     <StyledSideElement orientation={orientation}>
-      {prefersReducedMotion ? (
-        <>{children}</>
-      ) : (
-        <TransitionGroup component={null}>
-          {isMounted && (
-            <CSSTransition
-              classNames={isHome ? 'fade' : ''}
-              timeout={isHome ? loaderDelay : 0}
-              nodeRef={nodeRef}>
-              <div ref={nodeRef}>{children}</div>
-            </CSSTransition>
-          )}
-        </TransitionGroup>
-      )}
+      <TransitionGroup component={null}>
+        {isMounted && (
+          <CSSTransition
+            classNames={isHome && !prefersReducedMotion ? 'fade' : 'none'}
+            timeout={isHome && !prefersReducedMotion ? loaderDelay : 0}
+            nodeRef={nodeRef}>
+            <div ref={nodeRef}>{children}</div>
+          </CSSTransition>
+        )}
+      </TransitionGroup>
     </StyledSideElement>
   );
 };

@@ -7,8 +7,8 @@ const siteMetadata = {
   twitterUsername: '@bchiang7',
   googleAnalyticsId: 'UA-45666519-2',
   googleSiteVerification: 'DCl7VAf9tcz6eD9gb67NfkNnJ1PKRNcg8qQiwpbx9Lk',
-  themeColor: '#0b223d',
-  backgroundColor: '#04162a',
+  themeColor: '#ffffff',
+  backgroundColor: '#f8fafc',
 };
 
 export default siteMetadata;

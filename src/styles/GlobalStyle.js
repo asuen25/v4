@@ -75,6 +75,11 @@ const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     background-color: var(--navy);
+    background-image:
+      linear-gradient(var(--lightest-navy) 1px, transparent 1px),
+      linear-gradient(90deg, var(--lightest-navy) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: -1px -1px;
     color: var(--slate);
     font-family: var(--font-sans);
     font-size: var(--fz-xl);
@@ -147,6 +152,11 @@ const GlobalStyle = createGlobalStyle`
     margin: 0 auto;
     padding: 90px 0;
     max-width: 100%;
+    border-top: 1px solid var(--lightest-navy);
+
+    &:first-of-type {
+      border-top: none;
+    }
 
     @media (max-width: 768px) {
       padding: 70px 0;
@@ -211,9 +221,9 @@ const GlobalStyle = createGlobalStyle`
       position: relative;
       top: -5px;
       width: 300px;
-      height: 1px;
+      height: 2px;
       margin-left: 20px;
-      background-color: var(--lightest-navy);
+      background: linear-gradient(90deg, var(--green) 0%, var(--lightest-navy) 100%);
 
       @media (max-width: 1080px) {
         width: 200px;
@@ -322,10 +332,11 @@ const GlobalStyle = createGlobalStyle`
         padding-left: 30px;
         margin-bottom: 10px;
         &:before {
-          content: '▹';
+          content: '→';
           position: absolute;
           left: 0;
           color: var(--green);
+          font-weight: bold;
         }
       }
     }
@@ -393,7 +404,9 @@ const GlobalStyle = createGlobalStyle`
     color: var(--green);
     font-family: var(--font-mono);
     font-size: var(--fz-md);
-    font-weight: 400;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
   .subtitle {
@@ -401,8 +414,9 @@ const GlobalStyle = createGlobalStyle`
     margin: 0 0 20px 0;
     font-size: var(--fz-md);
     font-family: var(--font-mono);
-    font-weight: 400;
+    font-weight: 500;
     line-height: 1.5;
+    letter-spacing: 0.05em;
     @media (max-width: 1080px) {
       font-size: var(--fz-sm);
     }

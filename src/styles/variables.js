@@ -2,23 +2,24 @@ import { css } from 'styled-components';
 
 const variables = css`
   :root {
-    --dark-navy: #04162a;
-    --navy: #0b223d;
-    --light-navy: #173457;
-    --lightest-navy: #2d4f78;
-    --navy-shadow: rgba(4, 22, 42, 0.7);
-    --dark-slate: #495670;
-    --slate: #8892b0;
-    --light-slate: #a8b2d1;
-    --lightest-slate: #ccd6f6;
-    --white: #e6f1ff;
-    --green: #64ffda;
-    --green-tint: rgba(100, 255, 218, 0.1);
-    --pink: #f57dff;
-    --blue: #7ad4ff;
+    /* Lab theme - white and sky blue color scheme */
+    --dark-navy: #f8fafc;
+    --navy: #ffffff;
+    --light-navy: #f0f9ff;
+    --lightest-navy: #e0f2fe;
+    --navy-shadow: rgba(56, 189, 248, 0.15);
+    --dark-slate: #64748b;
+    --slate: #475569;
+    --light-slate: #334155;
+    --lightest-slate: #1e293b;
+    --white: #0f172a;
+    --green: #0ea5e9;
+    --green-tint: rgba(14, 165, 233, 0.1);
+    --pink: #ec4899;
+    --blue: #3b82f6;
 
-    --font-sans: 'Calibre', 'Inter', 'San Francisco', 'SF Pro Text', -apple-system, system-ui,
-      sans-serif;
+    --font-sans:
+      'Calibre', 'Inter', 'San Francisco', 'SF Pro Text', -apple-system, system-ui, sans-serif;
     --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
 
     --fz-xxs: 12px;
@@ -30,7 +31,7 @@ const variables = css`
     --fz-xxl: 24px;
     --fz-heading: 36px;
 
-    --border-radius: 6px;
+    --border-radius: 2px;
     --nav-height: 100px;
     --nav-scroll-height: 70px;
 
@@ -45,8 +46,8 @@ const variables = css`
     --ham-before: top 0.1s ease-in 0.25s, opacity 0.1s ease-in;
     --ham-before-active: top 0.1s ease-out, opacity 0.1s ease-out 0.12s;
     --ham-after: bottom 0.1s ease-in 0.25s, transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19);
-    --ham-after-active: bottom 0.1s ease-out,
-      transform 0.22s cubic-bezier(0.215, 0.61, 0.355, 1) 0.12s;
+    --ham-after-active:
+      bottom 0.1s ease-out, transform 0.22s cubic-bezier(0.215, 0.61, 0.355, 1) 0.12s;
   }
 `;
 

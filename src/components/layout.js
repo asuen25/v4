@@ -16,9 +16,8 @@ const StyledContent = styled.div`
 `;
 
 const Layout = ({ children, location }) => {
-  const isServer = typeof window === 'undefined';
   const isHome = location.pathname === '/';
-  const [isLoading, setIsLoading] = useState(isHome && !isServer);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Sets target="_blank" rel="noopener noreferrer" on external links
   const handleExternalLinks = () => {
@@ -37,9 +36,12 @@ const Layout = ({ children, location }) => {
   };
 
   useEffect(() => {
-    if (isServer) {
-      return;
+    if (isHome) {
+      setIsLoading(true);
     }
+  }, [isHome]);
+
+  useEffect(() => {
     if (isLoading) {
       return;
     }
@@ -56,7 +58,7 @@ const Layout = ({ children, location }) => {
     }
 
     handleExternalLinks();
-  }, [isLoading]);
+  }, [isLoading, location.hash]);
 
   return (
     <>
@@ -68,16 +70,12 @@ const Layout = ({ children, location }) => {
             Skip to Content
           </a>
 
-          {isLoading && isHome && !isServer ? (
+          {isLoading && isHome ? (
             <Loader finishLoading={() => setIsLoading(false)} />
           ) : (
             <StyledContent>
-              {!isServer && (
-                <>
-                  <Nav isHome={isHome} />
-                  <Social isHome={isHome} />
-                </>
-              )}
+              <Nav isHome={isHome} />
+              <Social isHome={isHome} />
 
               <div id="content">
                 {children}
